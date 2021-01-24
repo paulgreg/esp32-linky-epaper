@@ -4,6 +4,8 @@
 
 Le but de ce projet est d’exposer la consommation électrique du foyer des 7 derniers jours.
 
+Le [projet est sur la plateforme hackaday](https://hackaday.io/project/177065-linky-daily-consumption) pour sa partie « électronique ».
+
 Ce projet nécessite un compteur linky, installé par Enedis (seulement en France à ma connaissance, d’où la documentation en français).
 
 L’idée est d’utiliser un esp32 couplé à un écran à encre électronique. L’intérêt d’un tel écran est qu’il laisse les infos affichés même s’il n’est plus alimenté.
