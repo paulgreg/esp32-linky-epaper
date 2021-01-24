@@ -12,36 +12,55 @@ void drawSmallText(int x, int y, char* text, int color) {
   display.println(text);
 }
 
-void drawBigText(int x, int y, char* text) {
-  display.setFont(&FreeMonoBold18pt7b);
-  display.setTextColor(GxEPD_BLACK);
-  display.setCursor(x, y);
-  display.println(text);
-}
-
-char* extractDate (char* str) { // str is like yyyy-mm-dd
-  char date[3];
+char* extractDate (char* str, char* date) { // str is like yyyy-mm-dd
   date[0] = str[8];
   date[1] = str[9];
   date[2] = '\0';
-  return date;
 }
 
 void displayDays(Data* daily) {
-  char* date;
-  int i = 0;
-  //for (int i = 0; i < DAYS; i++) {
-    date = extractDate(daily->days[i]);
-    Serial.println(date);
-    drawSmallText(10 + (i * 30), 10, date, GxEPD_BLACK);
-  //}
+  char date[3];
+  for (int i = 0; i < DAYS; i++) {
+    extractDate(daily->days[i], date);
+    drawSmallText(38 + i * 32, 172, date, GxEPD_BLACK);
+  }
+}
+
+int mapToY (int y) {
+ int r = 155 - y * 10;
+ Serial.printf("mapToY: %i ⁻> %i\n", y, r);
+ return r;
+}
+
+void displayScale() {
+  char s[4];
+  Serial.println("Scale");
+  for (int i = 0; i <= 14; i+=3) {
+    int y = mapToY(i);
+    sprintf(s, "%2dk", i);
+    drawSmallText(2, 5 + y, s, GxEPD_BLACK);
+    display.fillRect(40, y, 220, 2, GxEPD_RED);
+  }
+}
+
+void displayConsumption(Data* daily) {
+  for (int i = 0; i < DAYS; i++) {
+    int value = daily->values[i] / 1000;
+    int x = 48 + i * 32;
+    int y = mapToY(value);
+    display.fillRect(x, y, 10, 155 - y, GxEPD_BLACK);
+    display.fillRect(x, y, 2, 2, GxEPD_RED);
+
+  }
 }
 
 void displayData(Data* daily) {
   display.fillScreen(GxEPD_WHITE);
   display.firstPage();
   do {
+    displayScale();
     displayDays(daily);
+    displayConsumption(daily);
   } while (display.nextPage());
 }
 

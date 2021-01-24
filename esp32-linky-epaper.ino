@@ -14,9 +14,8 @@ GxEPD2_3C<GxEPD2_270c, GxEPD2_270c::HEIGHT> display(GxEPD2_270c(/*CS=*/ 15, /*DC
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <Arduino_JSON.h>
-
 JSONVar json;
-
+#define DAYS 7
 #include "parameters.h"
 #include "linky.h"
 #include "display.h"
@@ -37,9 +36,7 @@ void setup() {
   //SPI: void begin(int8_t sck=-1, int8_t miso=-1, int8_t mosi=-1, int8_t ss=-1);
   SPI.begin(13, 12, 14, 15); // map and init SPI pins SCK(13), MISO(12), MOSI(14), SS(15)
   // *** end of special handling for Waveshare ESP32 Driver board *** //
-
-  print_wakeup_reason();
-  
+  print_wakeup_reason();  
   display.setRotation(1);
 }
 
@@ -55,6 +52,7 @@ void loop() {
       fillDataFromJson(&daily);
       displayData(&daily);
     }
+    disconnectFromWifi();
   }
 
   uint64_t sleepTime = DAY;
