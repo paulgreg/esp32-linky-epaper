@@ -4,3 +4,5 @@
 #define URL_DAILY_CONSUMPTION "https://example.com/daily.json"
 #define LOGIN "login"
 #define PASSWORD "password"
+#
+#define KW_H_PRICE 0.15

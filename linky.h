@@ -6,10 +6,11 @@ struct Data {
 
 void fillDataFromJson(Data* data) {
   sprintf(data->unit, "%s", (const char*) json["unit"]);
-
-  for (int i = 0; i < DAYS; i++) {
-    sprintf(data->days[i], "%s", (const char*) json["data"][i]["date"]);
-    data->values[i] = (unsigned int) int(json["data"][i]["value"]);
+  int size = json["data"].length();
+  Serial.printf("data size: %i\0", size);
+  for (int i = 0, id = size - DAYS; i < DAYS; i++, id++) {
+    sprintf(data->days[i], "%s", (const char*) json["data"][id]["date"]);
+    data->values[i] = (unsigned int) int(json["data"][id]["value"]);
   }
 }
 

@@ -5,6 +5,13 @@ void drawText(int x, int y, char* text, int color) {
   display.println(text);
 }
 
+void drawTinyText(int x, int y, char* text, int color) {
+  display.setFont(&FreeMono9pt7b);
+  display.setTextColor(color);
+  display.setCursor(x, y);
+  display.println(text);
+}
+
 void drawSmallText(int x, int y, char* text, int color) {
   display.setFont(&FreeMonoBold9pt7b);
   display.setTextColor(color);
@@ -50,7 +57,21 @@ void displayConsumption(Data* daily) {
     int y = mapToY(value);
     display.fillRect(x, y, 10, 155 - y, GxEPD_BLACK);
     display.fillRect(x, y, 2, 2, GxEPD_RED);
+  }
+}
 
+void displayPrices(Data* daily) {
+  int baseY = 14;
+  drawSmallText(4, baseY + 2, "eur", GxEPD_BLACK);
+  char price[10];
+  for (int i = 0; i < DAYS; i++) {
+    float p = daily->values[i] * KW_H_PRICE / 1000;
+    sprintf(price, "%.1f", p);
+    int x = 38 + i * 32,
+        y = i % 2 == 0 ? baseY : baseY + 16;
+    int color = p >= 1.5 ? GxEPD_RED : GxEPD_BLACK;
+    drawTinyText(x, y, price, color);
+    Serial.printf("price: %s\n", price);
   }
 }
 
@@ -61,6 +82,7 @@ void displayData(Data* daily) {
     displayScale();
     displayDays(daily);
     displayConsumption(daily);
+    displayPrices(daily);
   } while (display.nextPage());
 }
 

@@ -23,7 +23,7 @@ Lancer ensuite l’authentification via `./node_module/.bin/linky auth...` tel q
 Vous pouvez ensuite lancer un tel script tous les jours (via crontab) pour générer des fichiers json :
 
     #!/bin/bash
-    START=$(date --date="7 days ago"  +%Y-%m-%d)
+    START=$(date --date="14 days ago"  +%Y-%m-%d)
     END=$(date --date="0 days ago"  +%Y-%m-%d)
     ./node_modules/.bin/linky daily     -s $START -e $END -o output/daily.json
     ./node_modules/.bin/linky maxpower  -s $START -e $END -o output/maxpower.json
