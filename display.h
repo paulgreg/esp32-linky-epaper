@@ -61,15 +61,15 @@ void displayConsumption(Data* daily) {
 
 void displayPrices(Data* daily) {
   int baseY = 14;
-  drawSmallText(4, baseY + 2, "eur", GxEPD_BLACK);
+  drawSmallText(0, baseY + 2, "eur", GxEPD_BLACK);
   char price[10];
   for (int i = 0; i < DAYS; i++) {
     float p = daily->values[i] * KW_H_PRICE / 1000;
     sprintf(price, "%.1f", p);
-    int x = 38 + i * 32,
+    int x = 40 + i * 31,
         y = i % 2 == 0 ? baseY : baseY + 16;
-    int color = p >= 1.5 ? GxEPD_RED : GxEPD_BLACK;
-    drawTinyText(x, y, price, color);
+    int color = p >= 1.5 ? GxEPD_BLACK : GxEPD_RED;
+    drawSmallText(x, y, price, color);
     Serial.printf("price: %s\n", price);
   }
 }

@@ -37,7 +37,7 @@ void setup() {
   SPI.begin(13, 12, 14, 15); // map and init SPI pins SCK(13), MISO(12), MOSI(14), SS(15)
   // *** end of special handling for Waveshare ESP32 Driver board *** //
   print_wakeup_reason();  
-  display.setRotation(1);
+  display.setRotation(3);
 }
 
 void loop() {
