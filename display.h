@@ -56,7 +56,6 @@ void displayConsumption(Data* daily) {
     int x = 48 + i * 32;
     int y = mapToY(value);
     display.fillRect(x, y, 10, 155 - y, GxEPD_BLACK);
-    display.fillRect(x, y, 2, 2, GxEPD_RED);
   }
 }
 
