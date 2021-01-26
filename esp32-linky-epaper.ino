@@ -49,8 +49,11 @@ void loop() {
       displayCenteredText("Error getting JSON");
     } else {
       Data daily;
-      fillDataFromJson(&daily);
-      displayData(&daily);
+      if (!fillDataFromJson(&daily)) {
+        displayCenteredText("Error parsing from JSON");
+      } else {
+        displayData(&daily);
+      }
     }
     disconnectFromWifi();
   }

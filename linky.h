@@ -4,14 +4,16 @@ struct Data {
   unsigned int values[DAYS];
 };
 
-void fillDataFromJson(Data* data) {
+boolean fillDataFromJson(Data* data) {
   sprintf(data->unit, "%s", (const char*) json["unit"]);
   int size = json["data"].length();
   Serial.printf("data size: %i\0", size);
+  if (size < DAYS) return false;
   for (int i = 0, id = size - DAYS; i < DAYS; i++, id++) {
     sprintf(data->days[i], "%s", (const char*) json["data"][id]["date"]);
     data->values[i] = (unsigned int) int(json["data"][id]["value"]);
   }
+  return true;
 }
 
 /* Daily.json
