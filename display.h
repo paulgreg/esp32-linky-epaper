@@ -55,7 +55,16 @@ void displayConsumption(Data* daily) {
     int value = daily->values[i] / 1000;
     int x = 48 + i * 32;
     int y = mapToY(value);
-    display.fillRect(x, y, 10, 155 - y, GxEPD_BLACK);
+    display.fillRect(x, y, 12, 155 - y, GxEPD_BLACK);
+  }
+}
+
+void displayMaxPower(Data* power) {
+  for (int i = 0; i < DAYS; i++) {
+    int value = power->values[i] / 1000;
+    int x = 40 + i * 32;
+    int y = mapToY(value);
+    display.fillRect(x, y, 6, 155 - y, GxEPD_RED);
   }
 }
 
@@ -74,7 +83,7 @@ void displayPrices(Data* daily) {
   }
 }
 
-void displayData(Data* daily) {
+void displayData(Data* daily, Data* power) {
   display.fillScreen(GxEPD_WHITE);
   display.firstPage();
   do {
@@ -82,6 +91,7 @@ void displayData(Data* daily) {
     displayDays(daily);
     displayConsumption(daily);
     displayPrices(daily);
+    displayMaxPower(power);
   } while (display.nextPage());
 }
 

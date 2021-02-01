@@ -14,13 +14,11 @@ GxEPD2_3C<GxEPD2_270c, GxEPD2_270c::HEIGHT> display(GxEPD2_270c(/*CS=*/ 15, /*DC
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <Arduino_JSON.h>
-JSONVar json;
 #define DAYS 7
 #include "parameters.h"
 #include "linky.h"
 #include "display.h"
 #include "network.h"
-
 
 const uint64_t SECOND = 1000;
 const uint64_t MINUTE = 60 * SECOND;
@@ -40,25 +38,42 @@ void setup() {
   display.setRotation(3);
 }
 
+JSONVar jsonDaily;
+JSONVar jsonPower;
+Data daily;
+Data power;
+
 void loop() {
   if (!connectToWifi()) {
     displayCenteredText("Can’t connect to wifi");
-  } else {
-    boolean jsonParsed = getJSON(URL_DAILY_CONSUMPTION, LOGIN, PASSWORD);
-    if (!jsonParsed) {
-      displayCenteredText("Error getting JSON");
+  } else {    
+    String dailyStr = getJSON(URL_DAILY_CONSUMPTION, LOGIN, PASSWORD);
+    jsonDaily = JSON.parse(dailyStr);
+  
+    Serial.print("jsonDaily: "); Serial.println(jsonDaily);
+    
+    String powerStr = getJSON(URL_MAX_POWER, LOGIN, PASSWORD);
+    jsonPower = JSON.parse(powerStr);
+    
+    Serial.print("jsonPower: "); Serial.println(jsonPower);
+    
+    if (JSON.typeof(jsonDaily) == "undefined") {
+      displayCenteredText("Error fetching daily JSON");
+    } else if (JSON.typeof(jsonPower) == "undefined") {
+      displayCenteredText("Error fetching power JSON");
     } else {
-      Data daily;
-      if (!fillDataFromJson(&daily)) {
-        displayCenteredText("Error parsing from JSON");
+      if (!fillDataFromJson(jsonDaily, &daily)) {
+        displayCenteredText("Error parsing daily JSON");
+      } else if (!fillDataFromJson(jsonPower, &power)) {
+        displayCenteredText("Error parsing max power JSON");
       } else {
-        displayData(&daily);
+        displayData(&daily, &power);
       }
     }
     disconnectFromWifi();
   }
 
-  uint64_t sleepTime = DAY;
+  uint64_t sleepTime = DAY + 30 * MINUTE;
   sleep(sleepTime);
 
   Serial.println("After sleep, that line should never be printed");

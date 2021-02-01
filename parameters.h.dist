@@ -2,6 +2,7 @@
 #define WIFI_PASSWORD "PASSWORD"
 
 #define URL_DAILY_CONSUMPTION "https://example.com/daily.json"
+#define URL_MAX_POWER "https://example.com/maxpower.json"
 #define LOGIN "login"
 #define PASSWORD "password"
 #

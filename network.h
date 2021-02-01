@@ -26,11 +26,10 @@ boolean disconnectFromWifi() {
   WiFi.disconnect();
 }
 
-boolean getJSON(const char* url, const char* login, const char* password) {
-  boolean success = false;
-   
-  if ((WiFi.status() == WL_CONNECTED)) {
 
+String getJSON(const char* url, const char* login, const char* password) {
+  String s;
+  if ((WiFi.status() == WL_CONNECTED)) {
     Serial.print("Connecting to ");
     Serial.println(url);
     
@@ -44,15 +43,9 @@ boolean getJSON(const char* url, const char* login, const char* password) {
       Serial.print("Error on HTTP request : ");
       Serial.println(httpCode);
     } else {
-      json = JSON.parse(http.getString());
-      
-      if (JSON.typeof(json) == "undefined") {
-        Serial.println("Parsing input failed!");
-      } else {
-        success = true;
-      }
+      s = http.getString();
     }
     http.end();
   }  
-  return success;
+  return s;
 }

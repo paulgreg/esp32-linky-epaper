@@ -1,14 +1,25 @@
 struct Data {
   char unit[10];
-  char days[DAYS][20];
+  char days[DAYS][30];
   unsigned int values[DAYS];
 };
 
-boolean fillDataFromJson(Data* data) {
+boolean fillDataFromJson(JSONVar json, Data* data) {
+  if (!json.hasOwnProperty("unit")) {
+    Serial.println("fillDataFromJson: unit key not found");
+    return false;
+  }
+  if (!json.hasOwnProperty("data")) {
+    Serial.println("fillDataFromJson: data key not found");
+    return false;
+  }
+  
   sprintf(data->unit, "%s", (const char*) json["unit"]);
   int size = json["data"].length();
+  
   Serial.printf("data size: %i\0", size);
   if (size < DAYS) return false;
+  
   for (int i = 0, id = size - DAYS; i < DAYS; i++, id++) {
     sprintf(data->days[i], "%s", (const char*) json["data"][id]["date"]);
     data->values[i] = (unsigned int) int(json["data"][id]["value"]);
