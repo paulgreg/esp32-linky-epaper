@@ -34,7 +34,9 @@ void displayDays(Data* daily) {
 }
 
 int mapToY (int y) {
- int r = 155 - y * 10;
+ int yy = y * 7;
+ int maxY = 155;
+ int r = yy < maxY ? maxY - yy : maxY;
  Serial.printf("mapToY: %i ⁻> %i\n", y, r);
  return r;
 }
@@ -42,7 +44,7 @@ int mapToY (int y) {
 void displayScale() {
   char s[4];
   Serial.println("Scale");
-  for (int i = 0; i <= 14; i+=3) {
+  for (int i = 0; i <= 15; i+=3) {
     int y = mapToY(i);
     sprintf(s, "%2dk", i);
     drawSmallText(2, 5 + y, s, GxEPD_BLACK);
