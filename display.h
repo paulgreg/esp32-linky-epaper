@@ -1,3 +1,7 @@
+#include <Fonts/FreeMono9pt7b.h>
+#include <Fonts/FreeMonoBold9pt7b.h>
+#include <Fonts/FreeMonoBold12pt7b.h>
+
 void drawText(int x, int y, char* text, int color) {
   display.setFont(&FreeMonoBold12pt7b);
   display.setTextColor(color);
