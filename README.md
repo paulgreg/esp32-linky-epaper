@@ -29,3 +29,8 @@ Vous pouvez ensuite lancer un tel script tous les jours (via crontab) pour gén�
     ./node_modules/.bin/linky maxpower  -s $START -e $END -o output/maxpower.json
 
 Vous aurez besoin de rendre le répertoire `output` accessible via https et protégé par un mot de passe.
+
+
+## Fonts
+
+Les polices de caractères proviennent de [Adafruit-GFX-Library-fontconvert](https://github.com/paulgreg/Adafruit-GFX-Library-fontconvert).
