@@ -31,7 +31,7 @@ void setup() {
   //SPI: void begin(int8_t sck=-1, int8_t miso=-1, int8_t mosi=-1, int8_t ss=-1);
   SPI.begin(13, 12, 14, 15); // map and init SPI pins SCK(13), MISO(12), MOSI(14), SS(15)
   // *** end of special handling for Waveshare ESP32 Driver board *** //
-  print_wakeup_reason();  
+  print_wakeup_reason();
   display.setRotation(3);
 }
 
@@ -42,18 +42,18 @@ Data power;
 
 void loop() {
   if (!connectToWifi()) {
-    displayCenteredText("Can’t connect to wifi");
-  } else {    
+    displayCenteredText("Can't connect to wifi");
+  } else {
     String dailyStr = getJSON(URL_DAILY_CONSUMPTION, LOGIN, PASSWORD);
     jsonDaily = JSON.parse(dailyStr);
-  
+
     Serial.print("jsonDaily: "); Serial.println(jsonDaily);
-    
+
     String powerStr = getJSON(URL_MAX_POWER, LOGIN, PASSWORD);
     jsonPower = JSON.parse(powerStr);
-    
+
     Serial.print("jsonPower: "); Serial.println(jsonPower);
-    
+
     if (JSON.typeof(jsonDaily) == "undefined") {
       displayCenteredText("Error fetching daily JSON");
     } else if (JSON.typeof(jsonPower) == "undefined") {
@@ -94,7 +94,7 @@ void print_wakeup_reason(){
     case 2  : Serial.println("Wakeup caused by external signal using RTC_CNTL"); break;
     case 3  : Serial.println("Wakeup caused by timer"); break;
     case 4  : {
-      Serial.print("Wakeup caused by touchpad pin "); 
+      Serial.print("Wakeup caused by touchpad pin ");
       Serial.println(esp_sleep_get_touchpad_wakeup_status());
       break;
     }
