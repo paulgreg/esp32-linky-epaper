@@ -7,7 +7,7 @@ boolean connectToWifi() {
   unsigned int retries = 100;
   while (WiFi.status() != WL_CONNECTED && (retries-- > 0)) {
     Serial.print(".");
-    delay(500);
+    delay(1000);
   }
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("\nWifi connection failed");

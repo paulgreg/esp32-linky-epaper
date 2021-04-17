@@ -42,29 +42,35 @@ Data power;
 
 void loop() {
   if (!connectToWifi()) {
-    displayCenteredText("Can't connect to wifi");
+    displayError("error:WIFI");
   } else {
-    String dailyStr = getJSON(URL_DAILY_CONSUMPTION, LOGIN, PASSWORD);
-    jsonDaily = JSON.parse(dailyStr);
-
-    Serial.print("jsonDaily: "); Serial.println(jsonDaily);
-
-    String powerStr = getJSON(URL_MAX_POWER, LOGIN, PASSWORD);
-    jsonPower = JSON.parse(powerStr);
-
-    Serial.print("jsonPower: "); Serial.println(jsonPower);
-
-    if (JSON.typeof(jsonDaily) == "undefined") {
-      displayCenteredText("Error fetching daily JSON");
-    } else if (JSON.typeof(jsonPower) == "undefined") {
-      displayCenteredText("Error fetching power JSON");
-    } else {
-      if (!fillDataFromJson(jsonDaily, &daily)) {
-        displayCenteredText("Error parsing daily JSON");
-      } else if (!fillDataFromJson(jsonPower, &power)) {
-        displayCenteredText("Error parsing max power JSON");
+    unsigned int retries = 5;
+    boolean success = false;
+    while(!success && (retries-- > 0)) {
+      delay(1000);
+      String dailyStr = getJSON(URL_DAILY_CONSUMPTION, LOGIN, PASSWORD);
+      jsonDaily = JSON.parse(dailyStr);
+  
+      Serial.print("jsonDaily: "); Serial.println(jsonDaily);
+  
+      String powerStr = getJSON(URL_MAX_POWER, LOGIN, PASSWORD);
+      jsonPower = JSON.parse(powerStr);
+  
+      Serial.print("jsonPower: "); Serial.println(jsonPower);
+  
+      if (JSON.typeof(jsonDaily) == "undefined") {
+        displayError("error:JSON-1");
+      } else if (JSON.typeof(jsonPower) == "undefined") {
+        displayError("error:JSON-2");
       } else {
-        displayData(&daily, &power);
+        if (!fillDataFromJson(jsonDaily, &daily)) {
+          displayError("error:JSON-3");
+        } else if (!fillDataFromJson(jsonPower, &power)) {
+          displayError("error:JSON-4");
+        } else {
+          displayData(&daily, &power);
+          success = true;
+        }
       }
     }
     disconnectFromWifi();
