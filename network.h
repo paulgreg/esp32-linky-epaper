@@ -17,8 +17,9 @@ boolean connectToWifi() {
   Serial.println("wifi connected");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+  Serial.print("DNS: ");
+  Serial.println(WiFi.dnsIP(0));
   Serial.println("");
-  WiFi.config(WiFi.localIP(), WiFi.gatewayIP(), WiFi.subnetMask(), IPAddress(9,9,9,9));
   return true;
 }
 
