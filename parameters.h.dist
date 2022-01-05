@@ -6,4 +6,4 @@
 #define LOGIN "login"
 #define PASSWORD "password"
 
-#define KW_H_PRICE 0.1582
+#define KW_H_PRICE 0.1558
