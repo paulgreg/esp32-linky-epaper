@@ -26,6 +26,7 @@ const uint64_t MICRO_SEC_TO_MILLI_SEC_FACTOR = 1000;
 void setup() {
   Serial.begin(115200);
   display.init(115200);
+  Serial.println("esp32-linky-epaper");
   // *** special handling for Waveshare ESP32 Driver board *** //
   SPI.end(); // release standard SPI pins, e.g. SCK(18), MISO(19), MOSI(23), SS(5)
   //SPI: void begin(int8_t sck=-1, int8_t miso=-1, int8_t mosi=-1, int8_t ss=-1);
