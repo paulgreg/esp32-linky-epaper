@@ -12,6 +12,10 @@ L’idée est d’utiliser un esp32 couplé à un écran à encre électronique.
 
 Le micro-controlleur peut ainsi récupèrer les dernières données, les mettre en forme sur l’écran puis se mettre en veille jusqu’au lendemain.
 
+## Programmation
+
+Pour la progrmmation, utilisez « WeMos D1 Mini ESP32 ».
+
 ## Partie serveur
 
 Étant donné qu’il semble compliqué de récupèrer directement les données du linky, j’utilise l’excellent paquet nodejs [bokub/linky](https://github.com/bokub/linky) pour extraire les données auprès d’enedis et de créer des fichiers json sur mon serveur web. Ces fichiers sont ensuite requêtés par l’esp32.
