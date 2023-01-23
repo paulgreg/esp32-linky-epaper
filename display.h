@@ -29,17 +29,12 @@ void drawText(int x, int y, char* text, int color) {
   display.println(text);
 }
 
-char* extractDate (char* str, char* date) { // str is like yyyy-mm-dd
-  date[0] = str[8];
-  date[1] = str[9];
-  date[2] = '\0';
-}
-
 void displayDays(Data* daily) {
   char date[3];
   for (int i = 0; i < DAYS; i++) {
-    extractDate(daily->days[i], date);
-    drawText(38 + i * 32, 172, date, GxEPD_BLACK);
+    if (strlen(daily->days[i]) >= 9) { // str is like yyyy-mm-dd
+      drawText(38 + i * 32, 172, &daily->days[i][8], GxEPD_BLACK);
+    }
   }
 }
 
@@ -47,7 +42,7 @@ int mapToY (int y) {
  int yy = y * 7;
  int maxY = 155;
  int r = yy < maxY ? maxY - yy : maxY;
- Serial.printf("mapToY: %i ⁻> %i\n", y, r);
+ // Serial.printf("mapToY: %i ⁻> %i\n", y, r);
  return r;
 }
 
