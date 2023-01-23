@@ -24,7 +24,8 @@ boolean connectToWifi() {
 }
 
 boolean disconnectFromWifi() {
-  WiFi.disconnect();
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
 }
 
 

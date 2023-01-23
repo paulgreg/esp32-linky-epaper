@@ -74,8 +74,8 @@ void loop() {
         }
       }
     }
-    disconnectFromWifi();
     display.hibernate();
+    //disconnectFromWifi();
   }
 
   uint64_t sleepTime = DAY + 30 * MINUTE;
