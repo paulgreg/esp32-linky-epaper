@@ -14,7 +14,7 @@ Le micro-controlleur peut ainsi récupèrer les dernières données, les mettre 
 
 ## Programmation
 
-Pour la progrmmation, utilisez « WeMos D1 Mini ESP32 ».
+Pour la programmation, utilisez « WeMos D1 Mini ESP32 ».
 
 ## Partie serveur
 
